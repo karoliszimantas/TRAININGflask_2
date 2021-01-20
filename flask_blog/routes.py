@@ -4,22 +4,11 @@ from flask_blog.forms import RegistrationForm, LoginForm
 from flask_blog.models import User, Post
 from flask_login import login_user, current_user, logout_user
 
-posts = [
-    {
-        "author":"Corey Shafer",
-        "title":"blog post",
-        "content":"april"
-    },
-    {
-        "author":"Steve James",
-        "title":"blog post2",
-        "content":"july"
-    }
-]
 
 @app.route("/")
 def home():
-    return render_template("home.html", posts=posts)
+    return render_template("home.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -35,6 +24,7 @@ def register():
         return redirect(url_for('login'))
     return render_template("register.html", title="Register", form=form)
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -49,8 +39,8 @@ def login():
             flash("login unsuccessful")
     return render_template("login.html", title="Login", form=form)
 
+
 app.route("/logout")
 def log_out():
     logout_user()
     return redirect(url_for('home'))
-
